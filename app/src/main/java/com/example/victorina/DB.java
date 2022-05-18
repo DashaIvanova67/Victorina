@@ -96,7 +96,7 @@ public class DB {
 
         while (!cursor.isAfterLast()) {
             count = Integer.parseInt(cursor.getString(0));
-            Log.d("vic777", "количество вопросов в базе: " + count);
+         //   Log.d("vic777", "количество вопросов в базе: " + count);
             cursor.moveToNext();
         }
         cursor.close();
@@ -106,28 +106,28 @@ public class DB {
         List<Vopros> voprosList = new ArrayList<>();
 
         sql = "SELECT Questions.text, Questions.right_answer FROM Questions";
-        Log.d("vic777", "всё");
+       // Log.d("vic777", "всё");
         cursor = getDataFromBD(sql, context);
         cursor.moveToFirst();
 
         //цикл для только вопросов
         while (!cursor.isAfterLast()) {
                voprosList.add(new Vopros(cursor.getString(0), Integer.parseInt(cursor.getString(1))));
-               Log.d("vic777", cursor.getString(0) + " " + cursor.getString(1));
+             //  Log.d("vic777", cursor.getString(0) + " " + cursor.getString(1));
                cursor.moveToNext();
         }
 
 
         //цикл для добавления ответов созданный ранее список voprosList
         sql = "SELECT Answers.id, Answers.text FROM Questions INNER JOIN Answers ON Questions.id = Answers.id";
-        Log.d("vic777", "всё");
+       // Log.d("vic777", "всё");
         cursor = getDataFromBD(sql, context);
         cursor.moveToFirst();
 
         List<String> answerList = new ArrayList<>(); // список ответов к каждому вопросу
         for (int i = 0; i < count; i++) {
             while (!cursor.isAfterLast()) {
-                Log.d("vic777", "i= " + i);
+               // Log.d("vic777", "i= " + i);
                 if (Integer.parseInt(cursor.getString(0)) == (i+1)){
                     answerList.add(cursor.getString(1));
                 }
@@ -137,8 +137,6 @@ public class DB {
             answerList.clear();
             cursor.moveToFirst();
         }
-
-        Log.d("vic777", voprosList.toString());
 
         return (ArrayList<Vopros>) voprosList;
     }
