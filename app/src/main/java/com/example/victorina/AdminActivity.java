@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.TextView;
 
 public class AdminActivity extends AppCompatActivity {
 
@@ -30,7 +29,7 @@ public class AdminActivity extends AppCompatActivity {
         switch(id){
 
             case R.id.admin_exit:
-                startActivity(new Intent(AdminActivity.this, MainActivity.class));
+                startActivity(new Intent(AdminActivity.this, VictorinaActivity.class));
                 return true;
         }
 
