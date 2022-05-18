@@ -1,5 +1,6 @@
 package com.example.victorina;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Vopros {
@@ -20,11 +21,21 @@ public class Vopros {
         return answers;
     }
 
-    public Vopros(String question, int rightAnswer, List<String> answers) {
+    public Vopros(String question, int rightAnswer) {
         this.question = question;
         this.rightAnswer = rightAnswer;
-        this.answers = answers;
+    }
 
+    @Override
+    public String toString() {
+        return "Vopros{" +
+                "question='" + question + '\'' +
+                ", rightAnswer=" + rightAnswer +
+                ", answers=" + answers +
+                '}';
+    }
 
+    public void setAnswers(List<String> answers) {
+        this.answers = new ArrayList(answers);
     }
 }
