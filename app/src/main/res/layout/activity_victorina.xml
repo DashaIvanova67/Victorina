@@ -33,9 +33,16 @@
 
 
     </ListView>
-    <androidx.appcompat.widget.AppCompatButton
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonNext"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        app:cornerRadius="5dp"
+        android:backgroundTint="@color/fon_button"
+        app:strokeColor="@color/teal_700"
+        android:textColor="@color/white"
+        android:textStyle="bold"
+        android:layout_margin="15dp"
         android:text="следующий вопрос" />
 </LinearLayout>

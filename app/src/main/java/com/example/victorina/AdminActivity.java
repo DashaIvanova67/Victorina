@@ -29,7 +29,7 @@ public class AdminActivity extends AppCompatActivity {
         switch(id){
 
             case R.id.admin_exit:
-                startActivity(new Intent(AdminActivity.this, VictorinaActivity.class));
+                startActivity(new Intent(AdminActivity.this, MainActivity.class));
                 return true;
         }
 

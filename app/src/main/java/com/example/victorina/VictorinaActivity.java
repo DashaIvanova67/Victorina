@@ -49,7 +49,7 @@ public class VictorinaActivity extends AppCompatActivity {
       //  Log.d("vic777", answersList.toString());
 
       //  Log.d("vic777", voprosList.toString());
-        adapter  =  new  ArrayAdapter<String>(this, android.R.layout.simple_list_item_multiple_choice, answersList);
+        adapter  =  new  ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, answersList);
         listView.setAdapter(adapter);
         questionText.setText(voprosList.get(questionNum).getQuestion());
 
