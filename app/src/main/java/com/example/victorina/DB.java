@@ -1,5 +1,6 @@
 package com.example.victorina;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -26,50 +27,9 @@ public class DB {
         cursor = bd.rawQuery(sqlQuery,null);
         return cursor;
     }
- /*   //INSERT запрос для таблицы пользователь к базе данных
-    public static void addUser(User user, Context context){
-        DatabaseHelper databaseHelper;
-        SQLiteDatabase bd;
-        databaseHelper = new DatabaseHelper(context);
-        try {
-            databaseHelper.updateDataBase();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        bd = databaseHelper.getReadableDatabase();
-        ContentValues newValues = new ContentValues();
-        newValues.put("login", user.getLogin());
-        newValues.put("pswrd", user.getPswrd());
-        newValues.put("fio", user.getFio());
-        newValues.put("adress", user.getFio());
-        bd.insert("users", null, newValues);
-    }
-
-    //INSERT запрос для таблицы пользователь к базе данных
-    public static void addBook(Book book, Context context){
-        DatabaseHelper databaseHelper;
-        SQLiteDatabase bd;
-        databaseHelper = new DatabaseHelper(context);
-        try {
-            databaseHelper.updateDataBase();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        bd = databaseHelper.getReadableDatabase();
-        ContentValues newValues = new ContentValues();
-        newValues.put("title", book.getTitle());
-        newValues.put("author", book.getAuthor());
-        newValues.put("annotation", book.getAnnotation());
-        newValues.put("page_count", book.getPageCount());
-        newValues.put("year_of_publ", book.getYearOfPubl());
-        newValues.put("wish", "no");
-        bd.insert("books", null, newValues);
-    }
-
-
 
     //UPDATE запрос для обновления данных в БД
-    public static void updateBook(int id, String wish, Context context){
+    public static void updateVopros(int id, Vopros vopros, Context context){
         DatabaseHelper databaseHelper;
         SQLiteDatabase bd;
         databaseHelper = new DatabaseHelper(context);
@@ -80,10 +40,43 @@ public class DB {
         }
         bd = databaseHelper.getReadableDatabase();
         ContentValues newValues = new ContentValues();
-        newValues.put("wish", wish);
-        int updCount = bd.update("books",newValues,"id = ?", new String[]{String.valueOf(id)});
+     //   Log.d("vic777", "ред вопрос " + vopros.getQuestion());
+     //   Log.d("vic777", "ред прав ответ " + vopros.getRightAnswer());
+     //   Log.d("vic777", "id " + id);
+        newValues.put("text", vopros.getQuestion());
+        newValues.put("right_answer", vopros.getRightAnswer());
+        int updCount = bd.update("Questions",newValues,"questions.id = ?", new String[]{String.valueOf(id + 1)});
 
-    }*/
+        //удалим все ответы для данного вопроса и добавим измененные
+          bd.delete("Answers","Answers.id = ?", new String[]{String.valueOf(id + 1)});
+     //   bd.delete("Answers","Answers.id = ?", new String[]{String.valueOf(1)});
+        newValues.clear();
+
+
+        //вставим новые ответы в цикле
+        for (int i=0; i<vopros.getAnswers().size();i++){
+            newValues.put("id", (id+1));
+            newValues.put("text", vopros.getAnswers().get(i));
+
+          //  Log.d("vic777", vopros.getAnswers().get(i));
+            bd.insert("Answers",null, newValues);
+            newValues.clear();
+        }
+
+//        for (int i=0; i<3;i++){
+//            newValues.put("id", (id+1));
+//            newValues.put("text", "new");
+//
+//            //  Log.d("vic777", vopros.getAnswers().get(i));
+//            bd.insert("Answers",null, newValues);
+//            newValues.clear();
+//        }
+
+
+
+
+
+    }
 
     public static ArrayList<Vopros> dbToClass(Context context) {
 
@@ -113,7 +106,7 @@ public class DB {
         //цикл для только вопросов
         while (!cursor.isAfterLast()) {
                voprosList.add(new Vopros(cursor.getString(0), Integer.parseInt(cursor.getString(1))));
-             //  Log.d("vic777", cursor.getString(0) + " " + cursor.getString(1));
+            //   Log.d("vic777", cursor.getString(0) + " " + cursor.getString(1));
                cursor.moveToNext();
         }
 

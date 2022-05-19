@@ -38,4 +38,12 @@ public class Vopros {
     public void setAnswers(List<String> answers) {
         this.answers = new ArrayList(answers);
     }
+
+    public void setQuestion(String question) {
+        this.question = question;
+    }
+
+    public void setRightAnswer(int rightAnswer) {
+        this.rightAnswer = rightAnswer;
+    }
 }

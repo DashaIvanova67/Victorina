@@ -59,7 +59,7 @@ public class VictorinaActivity extends AppCompatActivity {
                 if (otvet != 0){
                     if (otvet == voprosList.get(questionNum).getRightAnswer()){
                         countRightAnswers++;
-                        Log.d("vic777", "верно");
+                     //   Log.d("vic777", "верно");
                     }
                     otvet = 0;
                     questionNum++;

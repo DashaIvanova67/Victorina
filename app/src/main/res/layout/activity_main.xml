@@ -13,7 +13,6 @@
 
         android:onClick="openTest"
         android:text="Пройти тест"
-        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
         app:cornerRadius="5dp"
         android:backgroundTint="@color/fon_button"
         app:strokeColor="@color/teal_700"
