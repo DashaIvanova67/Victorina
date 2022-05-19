@@ -133,4 +133,62 @@ public class DB {
 
         return (ArrayList<Vopros>) voprosList;
     }
+
+    //INSERT запрос для БД
+    public static void insertVopros(Vopros vopros, Context context){
+        DatabaseHelper databaseHelper;
+        SQLiteDatabase bd;
+        databaseHelper = new DatabaseHelper(context);
+        try {
+            databaseHelper.updateDataBase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        bd = databaseHelper.getReadableDatabase();
+        ContentValues newValues = new ContentValues();
+        //   Log.d("vic777", "ред вопрос " + vopros.getQuestion());
+        //   Log.d("vic777", "ред прав ответ " + vopros.getRightAnswer());
+        //   Log.d("vic777", "id " + id);
+        newValues.put("text", vopros.getQuestion());
+        //вставим текст вопроса и номер правильного ответа
+        newValues.put("right_answer", vopros.getRightAnswer());
+        bd.insert("Questions",null, newValues);
+        newValues.clear();
+
+        // узнаем id последней записи
+        int id = 0;
+        String sql = "SELECT MAX(Questions.id) FROM Questions";
+
+        Cursor cursor = getDataFromBD(sql, context);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            id = Integer.parseInt(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        Log.d("vic777", "max= " + id);
+
+        //вставим новые ответы в цикле
+        for (int i=0; i<vopros.getAnswers().size();i++){
+            newValues.put("id", (id));
+            newValues.put("text", vopros.getAnswers().get(i));
+
+            //  Log.d("vic777", vopros.getAnswers().get(i));
+            bd.insert("Answers",null, newValues);
+            newValues.clear();
+        }
+
+//        for (int i=0; i<3;i++){
+//            newValues.put("id", (id+1));
+//            newValues.put("text", "new");
+//
+//            //  Log.d("vic777", vopros.getAnswers().get(i));
+//            bd.insert("Answers",null, newValues);
+//            newValues.clear();
+//        }
+
+
+
+
+
+    }
 }

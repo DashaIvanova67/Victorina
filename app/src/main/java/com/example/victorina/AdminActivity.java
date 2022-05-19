@@ -111,4 +111,8 @@ public class AdminActivity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void openAddActivity(View view) {
+        startActivity(new Intent(AdminActivity.this, AddActivity.class));
+    }
 }

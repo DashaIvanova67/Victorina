@@ -16,7 +16,7 @@ import java.io.OutputStream;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private static String DB_NAME = "victorina.db";
+    private static String DB_NAME = "victorina-v1.db";
     private static String DB_PATH = "";
     private static final int DB_VERSION = 1;
 

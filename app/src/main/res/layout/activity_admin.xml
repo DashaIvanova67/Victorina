@@ -75,6 +75,7 @@
     </LinearLayout>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:onClick="openAddActivity"
         android:id="@+id/addButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
