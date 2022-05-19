@@ -28,6 +28,21 @@ public class DB {
         return cursor;
     }
 
+    //DELETE запрос к базе в виде объекта Cursor
+    public static void delete(int id, Context context){
+        Log.d("vic777", "ред вопрос " + id);
+        DatabaseHelper databaseHelper;
+        SQLiteDatabase bd;
+        databaseHelper = new DatabaseHelper(context);
+        try {
+            databaseHelper.updateDataBase();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        bd = databaseHelper.getReadableDatabase();
+        bd.delete("questions", "questions.id = ?", new String[]{String.valueOf(id + 1)});
+    }
+
     //UPDATE запрос для обновления данных в БД
     public static void updateVopros(int id, Vopros vopros, Context context){
         DatabaseHelper databaseHelper;

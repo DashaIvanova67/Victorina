@@ -74,15 +74,32 @@
             android:text="Сохранить" />
     </LinearLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:onClick="openAddActivity"
-        android:id="@+id/addButton"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:clickable="true"
-        android:layout_gravity="right"
-        android:layout_margin="15dp"
-        app:srcCompat="@drawable/add_but" />
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/addButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="15dp"
+            android:clickable="true"
+            android:onClick="openAddActivity"
+            app:srcCompat="@drawable/add_but" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/deleteButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:layout_margin="15dp"
+            android:clickable="true"
+            android:onClick="deleteVopros"
+            app:srcCompat="@drawable/delete_but" />
+    </LinearLayout>
 
 
 </LinearLayout>

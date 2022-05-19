@@ -115,4 +115,9 @@ public class AdminActivity extends AppCompatActivity {
     public void openAddActivity(View view) {
         startActivity(new Intent(AdminActivity.this, AddActivity.class));
     }
+
+    public void deleteVopros(View view) {
+        DB.delete(questionNum,this);
+
+    }
 }
