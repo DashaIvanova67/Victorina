@@ -117,7 +117,7 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     public void deleteVopros(View view) {
-        DB.delete(questionNum,this);
+        DB.delete(questionField.getText().toString(),this);
 
     }
 }

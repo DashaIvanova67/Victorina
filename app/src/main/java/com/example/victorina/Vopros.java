@@ -5,6 +5,12 @@ import java.util.List;
 
 public class Vopros {
 
+    private int id;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     private String question;
     private int rightAnswer;
     private List<String> answers;
@@ -21,6 +27,12 @@ public class Vopros {
         return answers;
     }
 
+    public Vopros(String question, int rightAnswer, int id) {
+        this.question = question;
+        this.rightAnswer = rightAnswer;
+        this.id = id;
+    }
+
     public Vopros(String question, int rightAnswer) {
         this.question = question;
         this.rightAnswer = rightAnswer;
@@ -29,7 +41,8 @@ public class Vopros {
     @Override
     public String toString() {
         return "Vopros{" +
-                "question='" + question + '\'' +
+                "id=" + id +
+                ", question='" + question + '\'' +
                 ", rightAnswer=" + rightAnswer +
                 ", answers=" + answers +
                 '}';

@@ -29,8 +29,8 @@ public class DB {
     }
 
     //DELETE запрос к базе в виде объекта Cursor
-    public static void delete(int id, Context context){
-        Log.d("vic777", "ред вопрос " + id);
+    public static void delete(String text, Context context){
+        Log.d("vic777", "ред вопрос " + text);
         DatabaseHelper databaseHelper;
         SQLiteDatabase bd;
         databaseHelper = new DatabaseHelper(context);
@@ -40,7 +40,7 @@ public class DB {
             e.printStackTrace();
         }
         bd = databaseHelper.getReadableDatabase();
-        bd.delete("questions", "questions.id = ?", new String[]{String.valueOf(id + 1)});
+        bd.delete("questions", "questions.text = ?", new String[]{text});
     }
 
     //UPDATE запрос для обновления данных в БД
@@ -113,18 +113,33 @@ public class DB {
         //выгрузим данные из бд в список вопросов
         List<Vopros> voprosList = new ArrayList<>();
 
-        sql = "SELECT Questions.text, Questions.right_answer FROM Questions";
+        sql = "SELECT Questions.text, Questions.right_answer, Questions.id FROM Questions";
        // Log.d("vic777", "всё");
         cursor = getDataFromBD(sql, context);
         cursor.moveToFirst();
 
         //цикл для только вопросов
         while (!cursor.isAfterLast()) {
-               voprosList.add(new Vopros(cursor.getString(0), Integer.parseInt(cursor.getString(1))));
-            //   Log.d("vic777", cursor.getString(0) + " " + cursor.getString(1));
+               voprosList.add(new Vopros(cursor.getString(0), Integer.parseInt(cursor.getString(1)),Integer.parseInt(cursor.getString(2))));
+
+               //Log.d("vic777", cursor.getString(0) + " " + cursor.getString(1));
                cursor.moveToNext();
         }
+        Log.d("vic777", "kolvo voprosov = " + voprosList.size());
+        Log.d("vic777", voprosList.toString());
 
+        // узнаем id последней записи
+        int idMax = 0;
+        sql = "SELECT MAX(Questions.id) FROM Questions";
+
+        cursor = getDataFromBD(sql, context);
+        cursor.moveToFirst();
+        while (!cursor.isAfterLast()) {
+            idMax = Integer.parseInt(cursor.getString(0));
+            cursor.moveToNext();
+        }
+        Log.d("vic777", "idMax = " + idMax);
+        cursor.close();
 
         //цикл для добавления ответов созданный ранее список voprosList
         sql = "SELECT Answers.id, Answers.text FROM Questions INNER JOIN Answers ON Questions.id = Answers.id";
@@ -133,14 +148,19 @@ public class DB {
         cursor.moveToFirst();
 
         List<String> answerList = new ArrayList<>(); // список ответов к каждому вопросу
-        for (int i = 0; i < count; i++) {
+        int j = 0;
+        for (int i = 0; i < idMax; i++) {
             while (!cursor.isAfterLast()) {
-               // Log.d("vic777", "i= " + i);
+                Log.d("vic777", "i= " + i);
                 if (Integer.parseInt(cursor.getString(0)) == (i+1)){
                     answerList.add(cursor.getString(1));
                 }
-                voprosList.get(i).setAnswers(answerList);
                 cursor.moveToNext();
+            }
+            if (answerList.size() != 0){
+                Log.d("vic777", "j= " + j);
+                voprosList.get(j).setAnswers(answerList);
+                j++;
             }
             answerList.clear();
             cursor.moveToFirst();
@@ -184,10 +204,10 @@ public class DB {
 
         //вставим новые ответы в цикле
         for (int i=0; i<vopros.getAnswers().size();i++){
-            newValues.put("id", (id));
+            newValues.put("id", id);
             newValues.put("text", vopros.getAnswers().get(i));
 
-            //  Log.d("vic777", vopros.getAnswers().get(i));
+            Log.d("vic777", vopros.getAnswers().get(i));
             bd.insert("Answers",null, newValues);
             newValues.clear();
         }
